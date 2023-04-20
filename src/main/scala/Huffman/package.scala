@@ -1,4 +1,3 @@
-package package
 
 package object Huffman {
   abstract class ArbolH
@@ -9,21 +8,23 @@ package object Huffman {
   case class Hoja(car: Char, peso: Int) extends ArbolH
 
 
-  def pesoA(arbol: ArbolH): Int = arbol match {
-    case Hoja(car, peso) => 0;
-    case Nodo(izq, der, cars, peso) => 1 + pesoA(izq) + pesoA(der)
+  def peso(arbol: ArbolH): Int = arbol match {
+    case Hoja(car, peso) => peso;
+    case Nodo(izq, der, cars, peso) => peso
   }
 
-  def carsA(arbol: ArbolH): List[Char] = arbol match {
+  def cars(arbol: ArbolH): List[Char] = arbol match {
     case Hoja(car, peso) => List[Char](car)
-    case Nodo(izq, der, cars, peso) => List[Char](carsA(der) :: carsA(izq))
+    case Nodo(izq, der, cars, peso) => cars
   }
 
   def hacerNodoArbolH(izq: ArbolH, der: ArbolH) =
-    Nodo(izq, der, carsA(izq) ::: carsA(der), pesoA(izq) + pesoA(der))
+    Nodo(izq, der, cars(izq) ::: cars(der),  peso(izq) +  peso(der))
 
-  /*
+
   def ocurrencias(cars:List[Char]): List[(Char,Int)] = {
+    if (cars.isEmpty) List[Char,Int]()
+    else if (cars.tail.isEmpty) List((cars.head,1))
 
-  }*/
+  }
 }
